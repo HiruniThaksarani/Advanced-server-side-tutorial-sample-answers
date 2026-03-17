@@ -10,8 +10,6 @@ var path = require('node:path');
 var session = require('express-session');
 var methodOverride = require('method-override');
 
-var routes = require('./routes');
-
 var app = module.exports = express();
 
 // define a custom res.message() method
@@ -68,8 +66,8 @@ app.use(function(req, res, next){
   req.session.messages = [];
 });
 
-// mount all routes
-app.use(routes);
+// load controllers
+require('./lib/boot')(app, { verbose: !module.parent });
 
 app.use(function(err, req, res, next){
   if (!module.parent) console.error(err.stack);

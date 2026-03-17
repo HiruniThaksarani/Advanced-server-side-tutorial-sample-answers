@@ -1,14 +1,16 @@
- 'use strict';
+'use strict';
 
- // In-memory "database" of students
- // We will treat the array index as the student ID.
- const students = [
-   { name: 'TJ', grade: 88 },
-   { name: 'Guillermo', grade: 90 },
-   { name: 'Nathan', grade: 70 }
- ];
+const mysql = require('mysql2/promise');
 
- module.exports = {
-   students
- };
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',          // change to your MySQL user
+  password: '',          // change to your MySQL password
+  database: 'serverside2', // change to your DB name
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+
+module.exports = pool;
 
